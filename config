@@ -9,10 +9,24 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+##############################################################################
+# Basic Key Defs
+##############################################################################
+
 # use Win key for modifier
 set $mod Mod4
 # save Alt key so it's easier to read
 set $altmod Mod1
+
+# Ergo keys for movement -- defaults are jkl; (left, down, up, right)
+set $ergo_left j
+set $ergo_down k
+set $ergo_up i
+set $ergo_right l
+
+##############################################################################
+# Appearance
+##############################################################################
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -32,24 +46,55 @@ font pango:monospace 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal, preferring to use xterm if available
-bindsym $mod+F1 exec xterm || i3-sensible-terminal
+# HTML color codes for windows
+## Default colors
+## class                 border  backgr. text    indicator child_border
+#client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#client.background       #ffffff
+# New colors
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #f42eb8   #285577
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff
+
+##############################################################################
+# Basic Window Operations
+##############################################################################
 
 # kill focused window
 bindsym $altmod+F4 kill
 
+# "minimize" floating windows by moving them to the scratchpad and/or back.
+bindsym $mod+Shift+m move scratchpad # TODO: Needs filter to determine if window is already in the scratchpad or not
+bindsym $mod+m scratchpad show
+
+##############################################################################
+# Launchers
+##############################################################################
+
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+bracketright exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+##############################################################################
+# Focus
+##############################################################################
 
 # change focus -- ergo keys
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+i focus up
-bindsym $mod+l focus right
+bindsym $mod+$ergo_left focus left
+bindsym $mod+$ergo_down focus down
+bindsym $mod+$ergo_up focus up
+bindsym $mod+$ergo_right focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -58,10 +103,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window -- ergo keys
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+i move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+$ergo_left move left
+bindsym $mod+Shift+$ergo_down move down
+bindsym $mod+Shift+$ergo_up move up
+bindsym $mod+Shift+$ergo_right move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -69,14 +114,49 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+##############################################################################
+# Window Sizing
+##############################################################################
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $ergo_left resize shrink width 10 px or 10 ppt
+        bindsym $ergo_down resize grow height 10 px or 10 ppt
+        bindsym $ergo_up resize shrink height 10 px or 10 ppt
+        bindsym $ergo_right resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+##############################################################################
+# Container Orientation
+##############################################################################
+
 # split in horizontal orientation
 bindsym $mod+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -94,6 +174,10 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+
+##############################################################################
+# Workspaces
+##############################################################################
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -119,42 +203,84 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+##############################################################################
+# Overall i3 Commands
+##############################################################################
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+##############################################################################
+# Special Commands/Keys
+##############################################################################
+set $volume_up "amixer -D pulse sset Master 5%+"
+set $volume_down "amixer -D pulse sset Master 5%-"
+set $volume_mute_toggle "amixer -D pulse set Master +1 toggle"
+set $lockscreen "xscreensaver-command -lock"
+#set $lockscreen "light-locker-command --lock"
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym i resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+bindsym XF86AudioRaiseVolume $volume_up
+bindsym XF86AudioLowerVolume $volume_down
+bindsym XF86AudioMute $volume_mute_toggle
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+bindsym $altmod+Ctrl+Delete $lockscreen
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
+##############################################################################
+# Programs
+##############################################################################
+# start a terminal, preferring to use xterm if available
+bindsym $mod+F1 exec "if command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
+bindsym $mod+F2 exec firefox
+# start whichever is present, prefering google-chrome-stable over chromium-browser
+bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then google-chrome-stable ; else chromium-browser ; fi"
 
-bindsym $mod+r mode "resize"
-
+################################################################################
+# Bar
+################################################################################
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
         status_command i3status
         tray_output primary
+
+        workspace_buttons yes
+        strip_workspace_numbers no
+
+        binding_mode_indicator yes
 }
+
+
+#################################################################################
+# Autostart
+#################################################################################
+# Nautilus options to start without opening a window or managing the desktop don't work
+#exec "nautilus --no-default-window --no-desktop"
+
+# Needed for window resizing of VMWare to work
+exec "vmware-user-suid-wrapper"
+
+# Sound control
+exec "pasystray"
+
+# Bluetooth control, if present
+exec "blueman-applet"
+exec "bluetoothctl"
+
+# Network Manager with mouse
+exec "nm-applet"
+
+# Screen saver/screen locking, not all are always present
+exec "xscreensaver -nosplash"
+#exec "light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint"
+exec "screen-locker-start.sh"
+
+# A better power management control system, if present
+exec "xfce4-power-manager"
+
+# Force-fixes touchpad settings if they need special fixing on the device, if present
+exec_always "~/.touchpad-settings.sh"
