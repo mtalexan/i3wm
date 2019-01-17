@@ -28,6 +28,353 @@ set $ergo_right l
 set $quickswitch /home/dev/.config/i3/quickswitch-for-i3/quickswitch.py
 
 ##############################################################################
+# Basic Window Operations
+##############################################################################
+
+# kill focused window
+bindsym $altmod+F4 kill
+
+# "minimize" floating windows by moving them to the scratchpad and/or back.
+# TODO: Needs filter to determine if window is already in the scratchpad or not
+bindsym $mod+m move scratchpad 
+#bindsym $mod+m scratchpad show
+bindsym $mod+Shift+m exec $quickswitch --scratchpad --prompt
+
+##############################################################################
+# Focus
+##############################################################################
+
+# change focus -- ergo keys
+bindsym $mod+$ergo_left focus left
+bindsym $mod+$ergo_down focus down
+bindsym $mod+$ergo_up focus up
+bindsym $mod+$ergo_right focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container (when needing to select multiple containers)
+bindsym $mod+a focus parent
+
+# focus the child container (after previous selecting a parent)
+bindsym $mod+z focus child
+
+##############################################################################
+# Container Orientation
+##############################################################################
+
+# move focused window in tree -- ergo keys
+bindsym $mod+Shift+$ergo_left move left
+bindsym $mod+Shift+$ergo_down move down
+bindsym $mod+Shift+$ergo_up move up
+bindsym $mod+Shift+$ergo_right move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# change window layout in container (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# split in horizontal orientation on next new window
+bindsym $mod+h split h
+
+# split in vertical orientation on next new window
+bindsym $mod+v split v
+
+##############################################################################
+# Window Sizing & Positioning
+##############################################################################
+
+# resize window (you can also use the mouse for that)
+# Copied in "move" with Ctrl key inverted for move vs resize
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Changes size with arrows or ergo keys, fast-changes when holding Shift
+        # Moves when holding Ctrl, fast-changes when holding Ctrl+Shift
+
+        # Resize a little, fixed upper-left corner
+        bindsym $ergo_left resize shrink width 10 px or 10 ppt
+        bindsym $ergo_down resize grow height 10 px or 10 ppt
+        bindsym $ergo_up resize shrink height 10 px or 10 ppt
+        bindsym $ergo_right resize grow width 10 px or 10 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # Resize fast, fixed upper-left corner
+        bindsym Shift+$ergo_left resize shrink width 40 px or 40 ppt
+        bindsym Shift+$ergo_down resize grow height 40 px or 40 ppt
+        bindsym Shift+$ergo_up resize shrink height 40 px or 40 ppt
+        bindsym Shift+$ergo_right resize grow width 40 px or 40 ppt
+
+        bindsym Shift+Left resize shrink width 40 px or 40 ppt
+        bindsym Shift+Down resize grow height 40 px or 40 ppt
+        bindsym Shift+Up resize shrink height 40 px or 40 ppt
+        bindsym Shift+Right resize grow width 40 px or 40 ppt
+
+        # Move a little, fixed size
+        bindsym Ctrl+$ergo_left move left 10 px or 10 ppt
+        bindsym Ctrl+$ergo_down move down 10 px or 10 ppt
+        bindsym Ctrl+$ergo_up move up 10 px or 10 ppt
+        bindsym Ctrl+$ergo_right move right 10 px or 10 ppt
+
+        bindsym Ctrl+Left move left 10 px or 10 ppt
+        bindsym Ctrl+Down move down 10 px or 10 ppt
+        bindsym Ctrl+Up move up 10 px or 10 ppt
+        bindsym Ctrl+Right move right 10 px or 10 ppt
+
+        # Move a lot, fixed size  (useful in floating mode)
+        bindsym Ctrl+Shift+$ergo_left move left 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_down move down 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_up move up 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_right move right 40 px or 40 ppt
+
+        bindsym Ctrl+Shift+Left move left 40 px or 40 ppt
+        bindsym Ctrl+Shift+Down move down 40 px or 40 ppt
+        bindsym Ctrl+Shift+Up move up 40 px or 40 ppt
+        bindsym Ctrl+Shift+Right move right 40 px or 40 ppt
+
+        # tiling layout switching
+        bindsym s layout stacking
+        bindsym w layout tabbed
+        bindsym e layout toggle split
+
+        # Floating
+        bindsym Space floating toggle
+
+        # Move to workspaces and auto-exit mode
+        bindsym 1 move container to workspace 1 ; mode "default"
+        bindsym 2 move container to workspace 2 ; mode "default"
+        bindsym 3 move container to workspace 3 ; mode "default"
+        bindsym 4 move container to workspace 4 ; mode "default"
+        bindsym 5 move container to workspace 5 ; mode "default"
+        bindsym 6 move container to workspace 6 ; mode "default"
+        bindsym 7 move container to workspace 7 ; mode "default"
+        bindsym 8 move container to workspace 8 ; mode "default"
+        bindsym 9 move container to workspace 9 ; mode "default"
+        bindsym 0 move container to workspace 10 ; mode "default"
+
+        # move focused container to workspace and follow it
+		bindsym Ctrl+1 move container to workspace 1 ; workspace 1
+		bindsym Ctrl+2 move container to workspace 2  ; workspace 2
+		bindsym Ctrl+3 move container to workspace 3  ; workspace 3
+		bindsym Ctrl+4 move container to workspace 4  ; workspace 4
+		bindsym Ctrl+5 move container to workspace 5  ; workspace 5
+		bindsym Ctrl+6 move container to workspace 6  ; workspace 6
+		bindsym Ctrl+7 move container to workspace 7  ; workspace 7
+		bindsym Ctrl+8 move container to workspace 8  ; workspace 8
+		bindsym Ctrl+9 move container to workspace 9  ; workspace 9
+		bindsym Ctrl+0 move container to workspace 10 ; workspace 10
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# This is a copy of resize, but it inverts the behavior of Ctrl for move vs resize
+mode "move" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Moves with arrows or ergo keys, fast-changes when holding Shift
+        # Change size when holding Ctrl, fast-changes when holding Ctrl+Shift
+
+        # Resize a little, fixed upper-left corner
+        bindsym Ctrl+$ergo_left resize shrink width 10 px or 10 ppt
+        bindsym Ctrl+$ergo_down resize grow height 10 px or 10 ppt
+        bindsym Ctrl+$ergo_up resize shrink height 10 px or 10 ppt
+        bindsym Ctrl+$ergo_right resize grow width 10 px or 10 ppt
+
+        bindsym Ctrl+Left resize shrink width 10 px or 10 ppt
+        bindsym Ctrl+Down resize grow height 10 px or 10 ppt
+        bindsym Ctrl+Up resize shrink height 10 px or 10 ppt
+        bindsym Ctrl+Right resize grow width 10 px or 10 ppt
+
+        # Resize fast, fixed upper-left corner
+        bindsym Ctrl+Shift+$ergo_left resize shrink width 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_down resize grow height 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_up resize shrink height 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_right resize grow width 40 px or 40 ppt
+
+        bindsym Ctrl+Shift+Left resize shrink width 40 px or 40 ppt
+        bindsym Ctrl+Shift+Down resize grow height 40 px or 40 ppt
+        bindsym Ctrl+Shift+Up resize shrink height 40 px or 40 ppt
+        bindsym Ctrl+Shift+Right resize grow width 40 px or 40 ppt
+
+        # Move a little, fixed size
+        bindsym $ergo_left move left 10 px or 10 ppt
+        bindsym $ergo_down move down 10 px or 10 ppt
+        bindsym $ergo_up move up 10 px or 10 ppt
+        bindsym $ergo_right move right 10 px or 10 ppt
+
+        bindsym Left move left 10 px or 10 ppt
+        bindsym Down move down 10 px or 10 ppt
+        bindsym Up move up 10 px or 10 ppt
+        bindsym Right move right 10 px or 10 ppt
+
+        # Move a lot, fixed size (useful in floating mode)
+        bindsym Shift+$ergo_left move left 40 px or 40 ppt
+        bindsym Shift+$ergo_down move down 40 px or 40 ppt
+        bindsym Shift+$ergo_up move up 40 px or 40 ppt
+        bindsym Shift+$ergo_right move right 40 px or 40 ppt
+
+        bindsym Shift+Left move left 40 px or 40 ppt
+        bindsym Shift+Down move down 40 px or 40 ppt
+        bindsym Shift+Up move up 40 px or 40 ppt
+        bindsym Shift+Right move right 40 px or 40 ppt
+
+        # tiling layout switching
+        bindsym s layout stacking
+        bindsym w layout tabbed
+        bindsym e layout toggle split
+
+        # Floating
+        bindsym Space floating toggle
+
+        # Move to workspaces and auto-exit mode
+        bindsym 1 move container to workspace 1 ; mode "default"
+        bindsym 2 move container to workspace 2 ; mode "default"
+        bindsym 3 move container to workspace 3 ; mode "default"
+        bindsym 4 move container to workspace 4 ; mode "default"
+        bindsym 5 move container to workspace 5 ; mode "default"
+        bindsym 6 move container to workspace 6 ; mode "default"
+        bindsym 7 move container to workspace 7 ; mode "default"
+        bindsym 8 move container to workspace 8 ; mode "default"
+        bindsym 9 move container to workspace 9 ; mode "default"
+        bindsym 0 move container to workspace 10 ; mode "default"
+
+        # move focused container to workspace and follow it
+		bindsym Ctrl+1 move container to workspace 1 ; workspace 1
+		bindsym Ctrl+2 move container to workspace 2  ; workspace 2
+		bindsym Ctrl+3 move container to workspace 3  ; workspace 3
+		bindsym Ctrl+4 move container to workspace 4  ; workspace 4
+		bindsym Ctrl+5 move container to workspace 5  ; workspace 5
+		bindsym Ctrl+6 move container to workspace 6  ; workspace 6
+		bindsym Ctrl+7 move container to workspace 7  ; workspace 7
+		bindsym Ctrl+8 move container to workspace 8  ; workspace 8
+		bindsym Ctrl+9 move container to workspace 9  ; workspace 9
+		bindsym Ctrl+0 move container to workspace 10 ; workspace 10
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+bindsym $mod+Ctrl+r mode "move"
+
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+##############################################################################
+# Workspaces
+##############################################################################
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+# picked from a prompt
+bindsym $mod+grave exec $quickswitch --workspaces --prompt
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+# entered manually at a prompt
+bindsym $mod+Shift+grave exec i3-input -F 'move container to workspace "%s"' -P "Move to workspace: "
+# picked from a prompt
+#bindsym $mod+Shift+grave exec $quickswitch --journey --prompt
+
+# move focused container to workspace and follow it
+bindsym $mod+Ctrl+Shift+1 move container to workspace 1 ; workspace 1
+bindsym $mod+Ctrl+Shift+2 move container to workspace 2  ; workspace 2
+bindsym $mod+Ctrl+Shift+3 move container to workspace 3  ; workspace 3
+bindsym $mod+Ctrl+Shift+4 move container to workspace 4  ; workspace 4
+bindsym $mod+Ctrl+Shift+5 move container to workspace 5  ; workspace 5
+bindsym $mod+Ctrl+Shift+6 move container to workspace 6  ; workspace 6
+bindsym $mod+Ctrl+Shift+7 move container to workspace 7  ; workspace 7
+bindsym $mod+Ctrl+Shift+8 move container to workspace 8  ; workspace 8
+bindsym $mod+Ctrl+Shift+9 move container to workspace 9  ; workspace 9
+bindsym $mod+Ctrl+Shift+0 move container to workspace 10 ; workspace 10
+# picked from a prompt
+bindsym $mod+Ctrl+Shift+grave exec $quickswitch --journey --follow --prompt
+
+##############################################################################
+# Special Commands/Keys
+##############################################################################
+set $volume_up "amixer -D pulse sset Master 5%+"
+set $volume_down "amixer -D pulse sset Master 5%-"
+set $volume_mute_toggle "amixer -D pulse set Master +1 toggle"
+set $lockscreen "xscreensaver-command -lock"
+#set $lockscreen "light-locker-command --lock"
+
+bindsym XF86AudioRaiseVolume $volume_up
+bindsym XF86AudioLowerVolume $volume_down
+bindsym XF86AudioMute $volume_mute_toggle
+
+bindsym $altmod+Ctrl+Delete $lockscreen
+
+##############################################################################
+# Overall i3 Commands
+##############################################################################
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+##############################################################################
+# Launchers
+##############################################################################
+
+# start dmenu (a program launcher)
+bindsym $mod+bracketright exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+##############################################################################
+# Programs
+##############################################################################
+# start a terminal, preferring to use xterm if available
+bindsym $mod+F1 exec "if command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
+bindsym $mod+F2 exec firefox
+# start whichever is present, prefering google-chrome-stable over chromium-browser
+bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then google-chrome-stable ; else chromium-browser ; fi"
+
+##############################################################################
 # Appearance
 ##############################################################################
 
@@ -66,202 +413,6 @@ client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
-
-##############################################################################
-# Basic Window Operations
-##############################################################################
-
-# kill focused window
-bindsym $altmod+F4 kill
-
-# "minimize" floating windows by moving them to the scratchpad and/or back.
-# TODO: Needs filter to determine if window is already in the scratchpad or not
-bindsym $mod+m move scratchpad 
-#bindsym $mod+m scratchpad show
-bindsym $mod+Shift+m exec $quickswitch --scratchpad --prompt
-
-##############################################################################
-# Launchers
-##############################################################################
-
-# start dmenu (a program launcher)
-bindsym $mod+bracketright exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-
-##############################################################################
-# Focus
-##############################################################################
-
-# change focus -- ergo keys
-bindsym $mod+$ergo_left focus left
-bindsym $mod+$ergo_down focus down
-bindsym $mod+$ergo_up focus up
-bindsym $mod+$ergo_right focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# move focused window -- ergo keys
-bindsym $mod+Shift+$ergo_left move left
-bindsym $mod+Shift+$ergo_down move down
-bindsym $mod+Shift+$ergo_up move up
-bindsym $mod+Shift+$ergo_right move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-##############################################################################
-# Window Sizing
-##############################################################################
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym $ergo_left resize shrink width 10 px or 10 ppt
-        bindsym $ergo_down resize grow height 10 px or 10 ppt
-        bindsym $ergo_up resize shrink height 10 px or 10 ppt
-        bindsym $ergo_right resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-##############################################################################
-# Container Orientation
-##############################################################################
-
-# split in horizontal orientation on next new window
-bindsym $mod+h split h
-
-# split in vertical orientation on next new window
-bindsym $mod+v split v
-
-# change window layout in container (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container (when needing to select multiple containers)
-bindsym $mod+a focus parent
-
-# focus the child container (after previous selecting a parent)
-bindsym $mod+z focus child
-
-##############################################################################
-# Workspaces
-##############################################################################
-
-# switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
-# picked from a prompt
-bindsym $mod+grave exec $quickswitch --workspaces --prompt
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
-# picked from a prompt
-bindsym $mod+Shift+grave exec $quickswitch --journey --prompt
-
-# move focused container to workspace and follow it
-bindsym $mod+Ctrl+Shift+1 move container to workspace 1 ; workspace 1
-bindsym $mod+Ctrl+Shift+2 move container to workspace 2  ; workspace 2
-bindsym $mod+Ctrl+Shift+3 move container to workspace 3  ; workspace 3
-bindsym $mod+Ctrl+Shift+4 move container to workspace 4  ; workspace 4
-bindsym $mod+Ctrl+Shift+5 move container to workspace 5  ; workspace 5
-bindsym $mod+Ctrl+Shift+6 move container to workspace 6  ; workspace 6
-bindsym $mod+Ctrl+Shift+7 move container to workspace 7  ; workspace 7
-bindsym $mod+Ctrl+Shift+8 move container to workspace 8  ; workspace 8
-bindsym $mod+Ctrl+Shift+9 move container to workspace 9  ; workspace 9
-bindsym $mod+Ctrl+Shift+0 move container to workspace 10 ; workspace 10
-# picked from a prompt
-bindsym $mod+Ctrl+Shift+grave exec $quickswitch --journey --follow --prompt
-
-
-##############################################################################
-# Overall i3 Commands
-##############################################################################
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-##############################################################################
-# Special Commands/Keys
-##############################################################################
-set $volume_up "amixer -D pulse sset Master 5%+"
-set $volume_down "amixer -D pulse sset Master 5%-"
-set $volume_mute_toggle "amixer -D pulse set Master +1 toggle"
-set $lockscreen "xscreensaver-command -lock"
-#set $lockscreen "light-locker-command --lock"
-
-bindsym XF86AudioRaiseVolume $volume_up
-bindsym XF86AudioLowerVolume $volume_down
-bindsym XF86AudioMute $volume_mute_toggle
-
-bindsym $altmod+Ctrl+Delete $lockscreen
-
-##############################################################################
-# Programs
-##############################################################################
-# start a terminal, preferring to use xterm if available
-bindsym $mod+F1 exec "if command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
-bindsym $mod+F2 exec firefox
-# start whichever is present, prefering google-chrome-stable over chromium-browser
-bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then google-chrome-stable ; else chromium-browser ; fi"
 
 ################################################################################
 # Bar
