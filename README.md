@@ -17,3 +17,9 @@ Rofi:
 sudo apt-get install rofi
 
 Configuration should already be setup independently.  Useful for window selection menu, runner, etc
+
+quickswitch-for-i3:
+This is like a rofi alternative for just interacting with windows and workspaces.  It greatly extends
+the functionality of what can be done in i3.
+
+It requires i3-py to be installed from pip (Python 2.7) or pip3 (Python 3.2.3)

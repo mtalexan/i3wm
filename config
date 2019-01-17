@@ -10,7 +10,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 ##############################################################################
-# Basic Key Defs
+# Basic Defs
 ##############################################################################
 
 # use Win key for modifier
@@ -23,6 +23,9 @@ set $ergo_left j
 set $ergo_down k
 set $ergo_up i
 set $ergo_right l
+
+# quickswitch-i3 command with path, arguments should be appended
+set $quickswitch /home/dev/.config/i3/quickswitch-for-i3/quickswitch.py
 
 ##############################################################################
 # Appearance
@@ -72,8 +75,10 @@ client.background       #ffffff
 bindsym $altmod+F4 kill
 
 # "minimize" floating windows by moving them to the scratchpad and/or back.
-bindsym $mod+Shift+m move scratchpad # TODO: Needs filter to determine if window is already in the scratchpad or not
-bindsym $mod+m scratchpad show
+# TODO: Needs filter to determine if window is already in the scratchpad or not
+bindsym $mod+m move scratchpad 
+#bindsym $mod+m scratchpad show
+bindsym $mod+Shift+m exec $quickswitch --scratchpad --prompt
 
 ##############################################################################
 # Launchers
@@ -152,13 +157,13 @@ bindsym $mod+f fullscreen toggle
 # Container Orientation
 ##############################################################################
 
-# split in horizontal orientation
+# split in horizontal orientation on next new window
 bindsym $mod+h split h
 
-# split in vertical orientation
+# split in vertical orientation on next new window
 bindsym $mod+v split v
 
-# change container layout (stacked, tabbed, toggle split)
+# change window layout in container (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
@@ -169,11 +174,11 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
+# focus the parent container (when needing to select multiple containers)
 bindsym $mod+a focus parent
 
-# focus the child container
-#bindsym $mod+d focus child
+# focus the child container (after previous selecting a parent)
+bindsym $mod+z focus child
 
 ##############################################################################
 # Workspaces
@@ -190,6 +195,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+# picked from a prompt
+bindsym $mod+grave exec $quickswitch --workspaces --prompt
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -202,6 +209,23 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+# picked from a prompt
+bindsym $mod+Shift+grave exec $quickswitch --journey --prompt
+
+# move focused container to workspace and follow it
+bindsym $mod+Ctrl+Shift+1 move container to workspace 1 ; workspace 1
+bindsym $mod+Ctrl+Shift+2 move container to workspace 2  ; workspace 2
+bindsym $mod+Ctrl+Shift+3 move container to workspace 3  ; workspace 3
+bindsym $mod+Ctrl+Shift+4 move container to workspace 4  ; workspace 4
+bindsym $mod+Ctrl+Shift+5 move container to workspace 5  ; workspace 5
+bindsym $mod+Ctrl+Shift+6 move container to workspace 6  ; workspace 6
+bindsym $mod+Ctrl+Shift+7 move container to workspace 7  ; workspace 7
+bindsym $mod+Ctrl+Shift+8 move container to workspace 8  ; workspace 8
+bindsym $mod+Ctrl+Shift+9 move container to workspace 9  ; workspace 9
+bindsym $mod+Ctrl+Shift+0 move container to workspace 10 ; workspace 10
+# picked from a prompt
+bindsym $mod+Ctrl+Shift+grave exec $quickswitch --journey --follow --prompt
+
 
 ##############################################################################
 # Overall i3 Commands
