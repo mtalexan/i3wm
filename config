@@ -157,28 +157,28 @@ mode "resize" {
         bindsym Space floating toggle
 
         # Move to workspaces and auto-exit mode
-        bindsym 1 move container to workspace 1 ; mode "default"
-        bindsym 2 move container to workspace 2 ; mode "default"
-        bindsym 3 move container to workspace 3 ; mode "default"
-        bindsym 4 move container to workspace 4 ; mode "default"
-        bindsym 5 move container to workspace 5 ; mode "default"
-        bindsym 6 move container to workspace 6 ; mode "default"
-        bindsym 7 move container to workspace 7 ; mode "default"
-        bindsym 8 move container to workspace 8 ; mode "default"
-        bindsym 9 move container to workspace 9 ; mode "default"
-        bindsym 0 move container to workspace 10 ; mode "default"
+        bindsym 1 move container to workspace 1; mode "default"
+        bindsym 2 move container to workspace 2; mode "default"
+        bindsym 3 move container to workspace 3; mode "default"
+        bindsym 4 move container to workspace 4; mode "default"
+        bindsym 5 move container to workspace 5; mode "default"
+        bindsym 6 move container to workspace 6; mode "default"
+        bindsym 7 move container to workspace 7; mode "default"
+        bindsym 8 move container to workspace 8; mode "default"
+        bindsym 9 move container to workspace 9; mode "default"
+        bindsym 0 move container to workspace 10; mode "default"
 
         # move focused container to workspace and follow it
-		bindsym Ctrl+1 move container to workspace 1 ; workspace 1
-		bindsym Ctrl+2 move container to workspace 2  ; workspace 2
-		bindsym Ctrl+3 move container to workspace 3  ; workspace 3
-		bindsym Ctrl+4 move container to workspace 4  ; workspace 4
-		bindsym Ctrl+5 move container to workspace 5  ; workspace 5
-		bindsym Ctrl+6 move container to workspace 6  ; workspace 6
-		bindsym Ctrl+7 move container to workspace 7  ; workspace 7
-		bindsym Ctrl+8 move container to workspace 8  ; workspace 8
-		bindsym Ctrl+9 move container to workspace 9  ; workspace 9
-		bindsym Ctrl+0 move container to workspace 10 ; workspace 10
+		bindsym Ctrl+1 move container to workspace 1; workspace 1
+		bindsym Ctrl+2 move container to workspace 2; workspace 2
+		bindsym Ctrl+3 move container to workspace 3; workspace 3
+		bindsym Ctrl+4 move container to workspace 4; workspace 4
+		bindsym Ctrl+5 move container to workspace 5; workspace 5
+		bindsym Ctrl+6 move container to workspace 6; workspace 6
+		bindsym Ctrl+7 move container to workspace 7; workspace 7
+		bindsym Ctrl+8 move container to workspace 8; workspace 8
+		bindsym Ctrl+9 move container to workspace 9; workspace 9
+		bindsym Ctrl+0 move container to workspace 10; workspace 10
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -244,28 +244,28 @@ mode "move" {
         bindsym Space floating toggle
 
         # Move to workspaces and auto-exit mode
-        bindsym 1 move container to workspace 1 ; mode "default"
-        bindsym 2 move container to workspace 2 ; mode "default"
-        bindsym 3 move container to workspace 3 ; mode "default"
-        bindsym 4 move container to workspace 4 ; mode "default"
-        bindsym 5 move container to workspace 5 ; mode "default"
-        bindsym 6 move container to workspace 6 ; mode "default"
-        bindsym 7 move container to workspace 7 ; mode "default"
-        bindsym 8 move container to workspace 8 ; mode "default"
-        bindsym 9 move container to workspace 9 ; mode "default"
-        bindsym 0 move container to workspace 10 ; mode "default"
+        bindsym 1 move container to workspace 1; mode "default"
+        bindsym 2 move container to workspace 2; mode "default"
+        bindsym 3 move container to workspace 3; mode "default"
+        bindsym 4 move container to workspace 4; mode "default"
+        bindsym 5 move container to workspace 5; mode "default"
+        bindsym 6 move container to workspace 6; mode "default"
+        bindsym 7 move container to workspace 7; mode "default"
+        bindsym 8 move container to workspace 8; mode "default"
+        bindsym 9 move container to workspace 9; mode "default"
+        bindsym 0 move container to workspace 10; mode "default"
 
         # move focused container to workspace and follow it
-		bindsym Ctrl+1 move container to workspace 1 ; workspace 1
-		bindsym Ctrl+2 move container to workspace 2  ; workspace 2
-		bindsym Ctrl+3 move container to workspace 3  ; workspace 3
-		bindsym Ctrl+4 move container to workspace 4  ; workspace 4
-		bindsym Ctrl+5 move container to workspace 5  ; workspace 5
-		bindsym Ctrl+6 move container to workspace 6  ; workspace 6
-		bindsym Ctrl+7 move container to workspace 7  ; workspace 7
-		bindsym Ctrl+8 move container to workspace 8  ; workspace 8
-		bindsym Ctrl+9 move container to workspace 9  ; workspace 9
-		bindsym Ctrl+0 move container to workspace 10 ; workspace 10
+		bindsym Ctrl+1 move container to workspace 1; workspace 1
+		bindsym Ctrl+2 move container to workspace 2; workspace 2
+		bindsym Ctrl+3 move container to workspace 3; workspace 3
+		bindsym Ctrl+4 move container to workspace 4; workspace 4
+		bindsym Ctrl+5 move container to workspace 5; workspace 5
+		bindsym Ctrl+6 move container to workspace 6; workspace 6
+		bindsym Ctrl+7 move container to workspace 7; workspace 7
+		bindsym Ctrl+8 move container to workspace 8; workspace 8
+		bindsym Ctrl+9 move container to workspace 9; workspace 9
+		bindsym Ctrl+0 move container to workspace 10; workspace 10
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -314,16 +314,16 @@ bindsym $mod+Shift+grave exec i3-input -F 'move container to workspace "%s"' -P 
 #bindsym $mod+Shift+grave exec $quickswitch --journey --prompt
 
 # move focused container to workspace and follow it
-bindsym $mod+Ctrl+Shift+1 move container to workspace 1 ; workspace 1
-bindsym $mod+Ctrl+Shift+2 move container to workspace 2  ; workspace 2
-bindsym $mod+Ctrl+Shift+3 move container to workspace 3  ; workspace 3
-bindsym $mod+Ctrl+Shift+4 move container to workspace 4  ; workspace 4
-bindsym $mod+Ctrl+Shift+5 move container to workspace 5  ; workspace 5
-bindsym $mod+Ctrl+Shift+6 move container to workspace 6  ; workspace 6
-bindsym $mod+Ctrl+Shift+7 move container to workspace 7  ; workspace 7
-bindsym $mod+Ctrl+Shift+8 move container to workspace 8  ; workspace 8
-bindsym $mod+Ctrl+Shift+9 move container to workspace 9  ; workspace 9
-bindsym $mod+Ctrl+Shift+0 move container to workspace 10 ; workspace 10
+bindsym $mod+Ctrl+Shift+1 move container to workspace 1; workspace 1
+bindsym $mod+Ctrl+Shift+2 move container to workspace 2; workspace 2
+bindsym $mod+Ctrl+Shift+3 move container to workspace 3; workspace 3
+bindsym $mod+Ctrl+Shift+4 move container to workspace 4; workspace 4
+bindsym $mod+Ctrl+Shift+5 move container to workspace 5; workspace 5
+bindsym $mod+Ctrl+Shift+6 move container to workspace 6; workspace 6
+bindsym $mod+Ctrl+Shift+7 move container to workspace 7; workspace 7
+bindsym $mod+Ctrl+Shift+8 move container to workspace 8; workspace 8
+bindsym $mod+Ctrl+Shift+9 move container to workspace 9; workspace 9
+bindsym $mod+Ctrl+Shift+0 move container to workspace 10; workspace 10
 # picked from a prompt
 bindsym $mod+Ctrl+Shift+grave exec $quickswitch --journey --follow --prompt
 
