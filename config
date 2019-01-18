@@ -24,8 +24,14 @@ set $ergo_down k
 set $ergo_up i
 set $ergo_right l
 
+# The ${HOME} variable is interpreted once the command reaches the exec shell since
+# it would otherwise be a nested variable resolution that isn't supported in i3
+# config files.
+
 # quickswitch-i3 command with path, arguments should be appended
-set $quickswitch /home/dev/.config/i3/quickswitch-for-i3/quickswitch.py
+set $quickswitch ${HOME}/.config/i3/quickswitch-for-i3/quickswitch.py
+# i3-easyfocus command with path, arguments or piping for operations on the selected window should be appended
+set $easyfocus ${HOME}/.config/i3/i3-easyfocus/i3-easyfocus --font terminus-pt154-bold-32 --all
 
 ##############################################################################
 # Basic Window Operations
@@ -55,8 +61,13 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# easyfocus/avy/ace mode visible window selection
+bindsym $mod+semicolon /home/dev/.config/i3/i3-easyfocus/i3-easyfocus
+
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
+
+bindsym $altmod+Tab focus mode_floating; scratchpad show
 
 # focus the parent container (when needing to select multiple containers)
 bindsym $mod+a focus parent

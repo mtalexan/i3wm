@@ -23,3 +23,19 @@ This is like a rofi alternative for just interacting with windows and workspaces
 the functionality of what can be done in i3.
 
 It requires i3-py to be installed from pip (Python 2.7) or pip3 (Python 3.2.3)
+
+i3-easyfocus:
+Configured by modifying the src/config.h file directly.
+
+Requires i3ipc-glib which is in a new repo.
+
+sudo add-apt-repository ppa:aacebedo/libi3ipc-glib
+sudo apt-get update
+sudo apt-get install libi3ipc-glib
+
+And some development header dependencies:
+sudo apt-get install libjson-glib-dev libglib2.0-dev libxcb1-dev libxcb-keysyms1-dev
+
+It's configured via the src/config.h file.  An pre-configured one prefering home-row keys, a better font, and the Return key for exiting without selection is provided as i3-easyfocus-config.h that can be copied:
+
+cp i3-easyfocus-config.h i3-easyfocus/src/config.h
