@@ -34,7 +34,7 @@ sudo apt-get update
 sudo apt-get install libi3ipc-glib
 
 And some development header dependencies:
-sudo apt-get install libjson-glib-dev libglib2.0-dev libxcb1-dev libxcb-keysyms1-dev
+sudo apt-get install libjson-glib-dev libglib2.0-dev libxcb1-dev libxcb-keysyms1-dev xorg-dev
 
 It's configured via the src/config.h file.  An pre-configured one prefering home-row keys, a better font, and the Return key for exiting without selection is provided as i3-easyfocus-config.h that can be copied:
 
