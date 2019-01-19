@@ -24,14 +24,10 @@ set $ergo_down k
 set $ergo_up i
 set $ergo_right l
 
-# The ${HOME} variable is interpreted once the command reaches the exec shell since
-# it would otherwise be a nested variable resolution that isn't supported in i3
-# config files.
-
 # quickswitch-i3 command with path, arguments should be appended
-set $quickswitch ${HOME}/.config/i3/quickswitch-for-i3/quickswitch.py
+set $quickswitch ~/.config/i3/quickswitch-for-i3/quickswitch.py
 # i3-easyfocus command with path, arguments or piping for operations on the selected window should be appended
-set $easyfocus "${HOME}/.config/i3/i3-easyfocus/i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy"
+set $easyfocus "~/.config/i3/i3-easyfocus/i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy"
 
 ##############################################################################
 # Basic Window Operations
@@ -391,7 +387,7 @@ bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then goog
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:FontAwesome 8,monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -431,8 +427,23 @@ client.background       #ffffff
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
-#        tray_output primary
+        # give it a name in case we want another one
+        id bar-1
+
+        font pango:FontAwesome 8,monospace 8
+        status_command i3status -c ~/.config/i3/i3status.conf
+
+        #locate it
+        mode dock
+        position bottom
+
+        # laptop isn't identifying this display as the primary, so use it as default
+        # if present, then fallback to "primary"
+        tray_output LVDS-1-1
+        tray_output primary
+
+        # Full sized icons in tray. positive numbers reduce icon size
+        tray_padding 0
 
         workspace_buttons yes
         strip_workspace_numbers no
