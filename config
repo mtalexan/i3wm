@@ -376,7 +376,7 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 # Programs
 ##############################################################################
 # start a terminal, preferring to use xterm if available
-bindsym $mod+F1 exec "if command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
+bindsym $mod+F1 exec "if command -v rxvt-unicode &>/dev/null; then rxvt-unicode ; elif command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
 bindsym $mod+F2 exec firefox
 # start whichever is present, prefering google-chrome-stable over chromium-browser
 bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then google-chrome-stable ; else chromium-browser ; fi"
@@ -387,7 +387,7 @@ bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then goog
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:FontAwesome 8,monospace 8
+font pango:monospace 8,FontAwesome 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -456,26 +456,26 @@ bar {
 # Autostart
 #################################################################################
 # Nautilus options to start without opening a window or managing the desktop don't work
-#exec "nautilus --no-default-window --no-desktop"
+#exec --no-startup-id "nautilus --no-default-window --no-desktop"
 
 # Needed for window resizing of VMWare to work
-exec --no-startid "if command -v vmware-user-suid-wrapper &>/dev/null ; then vmware-user-suid-wrapper ; fi"
+exec --no-startup-id "if command -v vmware-user-suid-wrapper &>/dev/null ; then vmware-user-suid-wrapper ; fi"
 
 # Sound control
-exec "if command -v pasystray &>/dev/null ; then pasystray ; fi"
+exec --no-startup-id "if command -v pasystray &>/dev/null ; then pasystray ; fi"
 
 # Bluetooth control, if present
-exec "if command -v blueman-applet &>/dev/null ; then blueman-applet ; fi"
-exec "if command -v bluetoothctl &>/dev/null ; then bluetoothctl; fi"
+exec --no-startup-id "if command -v blueman-applet &>/dev/null ; then blueman-applet ; fi"
+exec --no-startup-id "if command -v bluetoothctl &>/dev/null ; then bluetoothctl; fi"
 
 # Network Manager with mouse
-exec "nm-applet"
+exec --no-startup-id "nm-applet"
 
 # Screen saver/screen locking, prefer xscreensaver if present, otherwise light-locker if present
-exec "if command -v xscreensaver -nosplash &>/dev/null ; then xscreensaver -nosplash ; elif command -v light-locker &>/dev/null ; then light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint ; fi"
+exec --no-startup-id "if command -v xscreensaver -nosplash &>/dev/null ; then xscreensaver -nosplash ; elif command -v light-locker &>/dev/null ; then light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint ; fi"
 
 # A better power management control system, if present
-exec "if command -v xfce4-power-manager &>/dev/null ; then xfce4-power-manager; fi"
+exec --no-startup-id "if command -v xfce4-power-manager &>/dev/null ; then xfce4-power-manager; fi"
 
 # Force-fixes touchpad settings if they need special fixing on the device, if present
-exec_always --no-startid "if [ -e ~/.touchpad_config.sh ] ; then ~/.touchpad_config.sh ; fi"
+exec_always --no-startup-id "if [ -e ~/.touchpad_config.sh ] ; then ~/.touchpad_config.sh ; fi"
