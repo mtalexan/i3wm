@@ -63,7 +63,7 @@ bindsym $mod+semicolon $easyfocus
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-bindsym $altmod+Tab focus mode_floating; scratchpad show
+bindsym $altmod+Tab focus floating; scratchpad show
 
 # focus the parent container (when needing to select multiple containers)
 bindsym $mod+a focus parent
