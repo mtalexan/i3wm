@@ -45,6 +45,10 @@ It's configured via the src/config.h file.  An pre-configured one prefering home
 
 cp i3-easyfocus-config.h i3-easyfocus/src/config.h
 
-polybar
-----------------------------
-See the polybar config folder
+Fonts:
+-----------------------------
+The status bar uses icons from fonts-font-awesome package.  Install it and restart to get some of the icons
+
+notify-send
+-----------------------------
+Some notifications are done thru notify-send, which is part of package libnotify-bin
