@@ -400,9 +400,10 @@ bindsym $mod+z exec --no-startup-id i3-dmenu-desktop
 ##############################################################################
 # Programs
 ##############################################################################
-# start a terminal, preferring to use xterm if available
-bindsym $mod+Return exec "if command -v rxvt-unicode &>/dev/null; then rxvt-unicode ; elif command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
-bindsym $mod+F1 exec "if command -v rxvt-unicode &>/dev/null; then rxvt-unicode ; elif command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
+# start a terminal
+# Use $mod+Return as a backup version since rxvt-unicode sometimes won't open or crashes
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+F1 exec "if command -v rxvt-unicode &>/dev/null; then rxvt-unicode ; elif command -v uxterm &>/dev/null ; then uxterm ; elif command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
 bindsym $mod+F2 exec firefox
 # start whichever is present, prefering google-chrome-stable over chromium-browser
 bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then google-chrome-stable ; else chromium-browser ; fi"
