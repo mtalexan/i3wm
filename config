@@ -401,8 +401,7 @@ bindsym $mod+z exec --no-startup-id i3-dmenu-desktop
 # Programs
 ##############################################################################
 # start a terminal
-# Use $mod+Return as a backup version since rxvt-unicode sometimes won't open or crashes
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec uxterm
 bindsym $mod+F1 exec "if command -v rxvt-unicode &>/dev/null; then rxvt-unicode ; elif command -v uxterm &>/dev/null ; then uxterm ; elif command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
 bindsym $mod+F2 exec firefox
 # start whichever is present, prefering google-chrome-stable over chromium-browser
@@ -589,6 +588,7 @@ exec --no-startup-id "if command -v vmware-user-suid-wrapper &>/dev/null ; then 
 
 # Sound control
 exec --no-startup-id "if command -v pasystray &>/dev/null ; then pasystray ; fi"
+exec --no-startup-id "if command -v volumeicon &>/dev/null ; then volumeicon ; fi"
 
 # Bluetooth control, if present
 exec --no-startup-id "if command -v blueman-applet &>/dev/null ; then blueman-applet ; fi"
