@@ -290,6 +290,9 @@ bindsym $mod+Ctrl+r mode "move"
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
+# prompt for input to change the title
+bindsym $mod+t exec i3-input -F 'title_format "%s"' -P 'New title: '
+
 ##############################################################################
 # Workspaces
 ##############################################################################
