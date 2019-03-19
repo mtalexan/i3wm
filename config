@@ -61,7 +61,7 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # easyfocus/avy/ace mode visible window selection
-bindsym $mod+semicolon $easyfocus
+bindsym $mod+semicolon exec $easyfocus
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -402,7 +402,8 @@ bindsym $mod+z exec --no-startup-id i3-dmenu-desktop
 ##############################################################################
 # start a terminal
 bindsym $mod+Return exec uxterm
-bindsym $mod+F1 exec "if command -v rxvt-unicode &>/dev/null; then rxvt-unicode ; elif command -v uxterm &>/dev/null ; then uxterm ; elif command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
+# rxvt-unicode crashes all the time in Ubuntu, or just won't even start
+bindsym $mod+F1 exec "if command -v uxterm &>/dev/null ; then uxterm ; elif command -v xterm &>/dev/null ; then xterm ; else i3-sensible-terminal ; fi"
 bindsym $mod+F2 exec firefox
 # start whichever is present, prefering google-chrome-stable over chromium-browser
 bindsym $mod+F3 exec "if command -v google-chrome-stable &>/dev/null ; then google-chrome-stable ; else chromium-browser ; fi"
@@ -527,8 +528,8 @@ for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 for_window [class="Steam"] floating enable border normal
-for_window [class="Firefox"] floating enable border normal
-for_window [class="Chrome"] floating enable border normal
+for_window [class="Firefox"] border normal
+for_window [class="Chrome"] border normal
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
