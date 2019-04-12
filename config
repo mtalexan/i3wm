@@ -192,6 +192,7 @@ mode "resize" {
 		bindsym Shift+7 move container to workspace 7; workspace 7
 		bindsym Shift+8 move container to workspace 8; workspace 8
 		bindsym Shift+9 move container to workspace 9; workspace 9
+		bindsym Shift+0 move container to workspace 10; workspace 10
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -277,6 +278,7 @@ mode "move" {
 		bindsym Shift+7 move container to workspace 7; workspace 7
 		bindsym Shift+8 move container to workspace 8; workspace 8
 		bindsym Shift+9 move container to workspace 9; workspace 9
+		bindsym Shift+0 move container to workspace 10; workspace 10
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -327,6 +329,8 @@ bindsym $mod+Ctrl+6 move container to workspace 6
 bindsym $mod+Ctrl+7 move container to workspace 7
 bindsym $mod+Ctrl+8 move container to workspace 8
 bindsym $mod+Ctrl+9 move container to workspace 9
+bindsym $mod+Ctrl+0 move container to workspace 10
+
 # entered manually at a prompt
 bindsym $mod+Ctrl+grave exec i3-input -F 'move container to workspace "%s"' -P "Move to workspace: "
 # picked from a prompt
