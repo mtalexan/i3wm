@@ -201,7 +201,7 @@ bindsym $mod+Shift+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
 # pop up a search menu for scratchpad windows
-bindsym $mod+Ctrl+minus $quickswitch --scratchpad --prompt
+bindsym $mod+Ctrl+minus exec $quickswitch --scratchpad --prompt
 
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
