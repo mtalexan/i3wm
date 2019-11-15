@@ -15,21 +15,24 @@ set $ergo_right l
 # quickswitch-i3 command with path, arguments should be appended
 set $quickswitch ~/.config/i3/quickswitch-for-i3/quickswitch.py
 # i3-easyfocus command with path, arguments or piping for operations on the selected window should be appended
-set $easyfocus "~/.config/i3/i3-easyfocus/i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy"
+# Colors:
+#  BG = {19532/65536=76/256=0x4C, 30840/65536=120/256=0x78, 39321/65536=154/256=0x9A} = 4C789A,
+#  FG = {65535=255=FF, 65535=255=FF, 65535=255=FF} = FFFFFF
+set $easyfocus "~/.config/i3/i3-easyfocus/i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy --color-urgent-bg 4C789A --color-urgent-fg FFFFFF --color-focused-bg 4C789A --color-focused-fg FFFFFF --color-unfocused-bg 4C789A --color-unfocused-fg FFFFFF"
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 1
-new_float normal
+#new_window pixel 1
+#new_float normal
 # the new way to do this same thing
-#default_border pixel 1
-#default_floating_border normal
+default_border pixel 1
+default_floating_border normal
 
 # Hide borders (can also be smart_no_gaps to hide only on single window)
-#hide_edge_borders smart_no_gaps
-hide_edge_borders smart
+hide_edge_borders smart_no_gaps
+#hide_edge_borders smart
 
 # change borders
 #bindsym $mod+u border none
@@ -69,7 +72,8 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+z exec --no-startup-id i3-dmenu-desktop
+#bindsym $mod+z exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+z exec --no-startup-id xfce4-popup-whiskermenu
 
 ################################################################################################
 ## sound-section
@@ -94,20 +98,26 @@ bindsym XF86AudioMute exec $volume_mute_toggle
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+Shift+Ctrl+b exec terminal -e 'bmenu'
+bindsym $mod+Shift+Ctrl+b exec $quickswitch --empty; exec terminal -e 'bmenu'
 bindsym $mod+F2 exec firefox
-bindsym $mod+Shift+F2 exec firefox
-#bindsym $mod+F3 exec  google-chrome-stable
-#bindsym $mod+Shift+F3 exec google-chrome-stable
-bindsym $mod+F3 exec  chromium
-bindsym $mod+Shift+F3 exec chromium
+bindsym $mod+Shift+F2 exec $quickswitch --empty; exec firefox
+bindsym $mod+F3 exec  google-chrome-stable
+bindsym $mod+Shift+F3 exec $quickswitch --empty; exec google-chrome-stable
+#bindsym $mod+F3 exec  chromium-browser
+#bindsym $mod+Shift+F3 exec $quickswitch --empty; exec chromium-browser
 bindsym $mod+F4 exec thunar
-bindsym $mod+Shift+F4 exec thunar
+bindsym $mod+Shift+F4 exec $quickswitch --empty; exec thunar
+#bindsym $mod+F4 exec pcmanfm
+#bindsym $mod+Shift+F4 exec $quickswitch --empty; exec pcmanfm
 bindsym $altmod+Print --release exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+
+# open copyq main window
+bindsym $mod+Insert exec copyq toggle
+
 
 # Don't follow the mouse, it's how we lose urgent pop ups
 focus_follows_mouse no
@@ -190,6 +200,8 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
+# pop up a search menu for scratchpad windows
+bindsym $mod+Ctrl+minus $quickswitch --scratchpad --prompt
 
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
@@ -208,7 +220,7 @@ set $ws6 6
 set $ws7 7
 set $ws8 8
 set $ws9 9
-set $ws10 10
+set $ws10 0
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -222,7 +234,7 @@ bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 # picked from a prompt
-bindsym $mod+grave exec $quickswitch --workspaces --prompt
+bindsym $mod+equal exec $quickswitch --workspaces --prompt
 
 # Move focused container to workspace
 bindsym $mod+Ctrl+1 move container to workspace $ws1
@@ -236,7 +248,10 @@ bindsym $mod+Ctrl+8 move container to workspace $ws8
 bindsym $mod+Ctrl+9 move container to workspace $ws9
 bindsym $mod+Ctrl+0 move container to workspace $ws10
 # entered manually at a prompt
-bindsym $mod+Ctrl+grave exec i3-input -F 'move container to workspace "%s"' -P "Move to workspace: "
+# double backslash required for how the parser works to escape the embedded doublequotes in the command
+bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"' -P \\"Move to workspace: \\""
+# quickswitch only works with workspaces that are already used, so it can't be used to send to an
+# empty workspace from the prompt
 
 # Move to workspace with focused container
 bindsym $mod+Ctrl+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -249,9 +264,12 @@ bindsym $mod+Ctrl+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Ctrl+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $mod+Ctrl+Shift+9 move container to workspace $ws8; workspace $ws9
 bindsym $mod+Ctrl+Shift+0 move container to workspace $ws10; workspace $ws10
-# picked from a prompt
-bindsym $mod+Ctrl+Shift+grave exec $quickswitch --journey --follow --prompt
-
+# entered manually at a prompt
+# double backslash required for how the parser works to escape the embedded doublequotes in the command.
+# Have to wrap the entire command in double-quotes so the semicolon can be included in the argument
+bindsym $mod+Ctrl+Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
+# quickswitch only works with workspaces that are already used, so it can't be used to send to an
+# empty workspace from the prompt
 
 # Open applications on specific workspaces
 # assign [class="Thunderbird"] $ws1
@@ -325,7 +343,8 @@ mode "$mode_system" {
     #bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     #bindsym u exec --no-startup-id dm-tool switch-to-greeter, mode "default"
     #bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    #bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym e exec xfce4-session-logout
     #bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
     #bindsym r exec --no-startup-id i3exit reboot, mode "default"
@@ -340,6 +359,10 @@ mode "$mode_system" {
 
 bindsym $altmod+Ctrl+Delete exec --no-startup-id $Locker
 
+# depending on i3 version, you either set pixels as "px" or as "ppt", so store it here and use it below
+set $pix px
+#set $pix ppt
+
 # resize window (you can also use the mouse for that)
 # Copied in "move" with Ctrl key inverted for move vs resize
 mode "resize" {
@@ -348,48 +371,48 @@ mode "resize" {
         # Moves when holding Ctrl, fast-changes when holding Ctrl+Shift
 
         # Resize a little, fixed upper-left corner
-        bindsym $ergo_left resize shrink width 10 px or 10 ppt
-        bindsym $ergo_down resize grow height 10 px or 10 ppt
-        bindsym $ergo_up resize shrink height 10 px or 10 ppt
-        bindsym $ergo_right resize grow width 10 px or 10 ppt
+        bindsym $ergo_left resize shrink width 10 $pix
+        bindsym $ergo_down resize grow height 10 $pix
+        bindsym $ergo_up resize shrink height 10 $pix
+        bindsym $ergo_right resize grow width 10 $pix
 
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 $pix
+        bindsym Down resize grow height 10 $pix
+        bindsym Up resize shrink height 10 $pix
+        bindsym Right resize grow width 10 $pix
 
         # Resize fast, fixed upper-left corner
-        bindsym Shift+$ergo_left resize shrink width 40 px or 40 ppt
-        bindsym Shift+$ergo_down resize grow height 40 px or 40 ppt
-        bindsym Shift+$ergo_up resize shrink height 40 px or 40 ppt
-        bindsym Shift+$ergo_right resize grow width 40 px or 40 ppt
+        bindsym Shift+$ergo_left resize shrink width 40 $pix
+        bindsym Shift+$ergo_down resize grow height 40 $pix
+        bindsym Shift+$ergo_up resize shrink height 40 $pix
+        bindsym Shift+$ergo_right resize grow width 40 $pix
 
-        bindsym Shift+Left resize shrink width 40 px or 40 ppt
-        bindsym Shift+Down resize grow height 40 px or 40 ppt
-        bindsym Shift+Up resize shrink height 40 px or 40 ppt
-        bindsym Shift+Right resize grow width 40 px or 40 ppt
+        bindsym Shift+Left resize shrink width 40 $pix
+        bindsym Shift+Down resize grow height 40 $pix
+        bindsym Shift+Up resize shrink height 40 $pix
+        bindsym Shift+Right resize grow width 40 $pix
 
         # Move a little, fixed size
-        bindsym Ctrl+$ergo_left move left 10 px or 10 ppt
-        bindsym Ctrl+$ergo_down move down 10 px or 10 ppt
-        bindsym Ctrl+$ergo_up move up 10 px or 10 ppt
-        bindsym Ctrl+$ergo_right move right 10 px or 10 ppt
+        bindsym Ctrl+$ergo_left move left 10 $pix
+        bindsym Ctrl+$ergo_down move down 10 $pix
+        bindsym Ctrl+$ergo_up move up 10 $pix
+        bindsym Ctrl+$ergo_right move right 10 $pix
 
-        bindsym Ctrl+Left move left 10 px or 10 ppt
-        bindsym Ctrl+Down move down 10 px or 10 ppt
-        bindsym Ctrl+Up move up 10 px or 10 ppt
-        bindsym Ctrl+Right move right 10 px or 10 ppt
+        bindsym Ctrl+Left move left 10 $pix
+        bindsym Ctrl+Down move down 10 $pix
+        bindsym Ctrl+Up move up 10 $pix
+        bindsym Ctrl+Right move right 10 $pix
 
         # Move a lot, fixed size  (useful in floating mode)
-        bindsym Ctrl+Shift+$ergo_left move left 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_down move down 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_up move up 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_right move right 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_left move left 40 $pix
+        bindsym Ctrl+Shift+$ergo_down move down 40 $pix
+        bindsym Ctrl+Shift+$ergo_up move up 40 $pix
+        bindsym Ctrl+Shift+$ergo_right move right 40 $pix
 
-        bindsym Ctrl+Shift+Left move left 40 px or 40 ppt
-        bindsym Ctrl+Shift+Down move down 40 px or 40 ppt
-        bindsym Ctrl+Shift+Up move up 40 px or 40 ppt
-        bindsym Ctrl+Shift+Right move right 40 px or 40 ppt
+        bindsym Ctrl+Shift+Left move left 40 $pix
+        bindsym Ctrl+Shift+Down move down 40 $pix
+        bindsym Ctrl+Shift+Up move up 40 $pix
+        bindsym Ctrl+Shift+Right move right 40 $pix
 
         # tiling layout switching
         bindsym s layout stacking
@@ -410,6 +433,8 @@ mode "resize" {
         bindsym 8 move container to workspace 8; mode "default"
         bindsym 9 move container to workspace 9; mode "default"
         bindsym 0 move container to workspace 10; mode "default"
+        # move to manually entered workspace and auto-exit
+        bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
 
         # move focused container to workspace and follow it
 		bindsym Shift+1 move container to workspace 1; workspace 1
@@ -422,6 +447,8 @@ mode "resize" {
 		bindsym Shift+8 move container to workspace 8; workspace 8
 		bindsym Shift+9 move container to workspace 9; workspace 9
 		bindsym Shift+0 move container to workspace 10; workspace 10
+        # prompt for workspace to move to and follow it
+        bindsym Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -435,48 +462,48 @@ mode "move" {
         # Change size when holding Ctrl, fast-changes when holding Ctrl+Shift
 
         # Resize a little, fixed upper-left corner
-        bindsym Ctrl+$ergo_left resize shrink width 10 px or 10 ppt
-        bindsym Ctrl+$ergo_down resize grow height 10 px or 10 ppt
-        bindsym Ctrl+$ergo_up resize shrink height 10 px or 10 ppt
-        bindsym Ctrl+$ergo_right resize grow width 10 px or 10 ppt
+        bindsym Ctrl+$ergo_left resize shrink width 10 $pix
+        bindsym Ctrl+$ergo_down resize grow height 10 $pix
+        bindsym Ctrl+$ergo_up resize shrink height 10 $pix
+        bindsym Ctrl+$ergo_right resize grow width 10 $pix
 
-        bindsym Ctrl+Left resize shrink width 10 px or 10 ppt
-        bindsym Ctrl+Down resize grow height 10 px or 10 ppt
-        bindsym Ctrl+Up resize shrink height 10 px or 10 ppt
-        bindsym Ctrl+Right resize grow width 10 px or 10 ppt
+        bindsym Ctrl+Left resize shrink width 10 $pix
+        bindsym Ctrl+Down resize grow height 10 $pix
+        bindsym Ctrl+Up resize shrink height 10 $pix
+        bindsym Ctrl+Right resize grow width 10 $pix
 
         # Resize fast, fixed upper-left corner
-        bindsym Ctrl+Shift+$ergo_left resize shrink width 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_down resize grow height 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_up resize shrink height 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_right resize grow width 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_left resize shrink width 40 $pix
+        bindsym Ctrl+Shift+$ergo_down resize grow height 40 $pix
+        bindsym Ctrl+Shift+$ergo_up resize shrink height 40 $pix
+        bindsym Ctrl+Shift+$ergo_right resize grow width 40 $pix
 
-        bindsym Ctrl+Shift+Left resize shrink width 40 px or 40 ppt
-        bindsym Ctrl+Shift+Down resize grow height 40 px or 40 ppt
-        bindsym Ctrl+Shift+Up resize shrink height 40 px or 40 ppt
-        bindsym Ctrl+Shift+Right resize grow width 40 px or 40 ppt
+        bindsym Ctrl+Shift+Left resize shrink width 40 $pix
+        bindsym Ctrl+Shift+Down resize grow height 40 $pix
+        bindsym Ctrl+Shift+Up resize shrink height 40 $pix
+        bindsym Ctrl+Shift+Right resize grow width 40 $pix
 
         # Move a little, fixed size
-        bindsym $ergo_left move left 10 px or 10 ppt
-        bindsym $ergo_down move down 10 px or 10 ppt
-        bindsym $ergo_up move up 10 px or 10 ppt
-        bindsym $ergo_right move right 10 px or 10 ppt
+        bindsym $ergo_left move left 10 $pix
+        bindsym $ergo_down move down 10 $pix
+        bindsym $ergo_up move up 10 $pix
+        bindsym $ergo_right move right 10 $pix
 
-        bindsym Left move left 10 px or 10 ppt
-        bindsym Down move down 10 px or 10 ppt
-        bindsym Up move up 10 px or 10 ppt
-        bindsym Right move right 10 px or 10 ppt
+        bindsym Left move left 10 $pix
+        bindsym Down move down 10 $pix
+        bindsym Up move up 10 $pix
+        bindsym Right move right 10 $pix
 
         # Move a lot, fixed size (useful in floating mode)
-        bindsym Shift+$ergo_left move left 40 px or 40 ppt
-        bindsym Shift+$ergo_down move down 40 px or 40 ppt
-        bindsym Shift+$ergo_up move up 40 px or 40 ppt
-        bindsym Shift+$ergo_right move right 40 px or 40 ppt
+        bindsym Shift+$ergo_left move left 40 $pix
+        bindsym Shift+$ergo_down move down 40 $pix
+        bindsym Shift+$ergo_up move up 40 $pix
+        bindsym Shift+$ergo_right move right 40 $pix
 
-        bindsym Shift+Left move left 40 px or 40 ppt
-        bindsym Shift+Down move down 40 px or 40 ppt
-        bindsym Shift+Up move up 40 px or 40 ppt
-        bindsym Shift+Right move right 40 px or 40 ppt
+        bindsym Shift+Left move left 40 $pix
+        bindsym Shift+Down move down 40 $pix
+        bindsym Shift+Up move up 40 $pix
+        bindsym Shift+Right move right 40 $pix
 
         # tiling layout switching
         bindsym s layout stacking
@@ -497,6 +524,8 @@ mode "move" {
         bindsym 8 move container to workspace 8; mode "default"
         bindsym 9 move container to workspace 9; mode "default"
         bindsym 0 move container to workspace 10; mode "default"
+        # move to manually entered workspace and auto-exit
+        bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
 
         # move focused container to workspace and follow it
 		bindsym Shift+1 move container to workspace 1; workspace 1
@@ -509,6 +538,8 @@ mode "move" {
 		bindsym Shift+8 move container to workspace 8; workspace 8
 		bindsym Shift+9 move container to workspace 9; workspace 9
 		bindsym Shift+0 move container to workspace 10; workspace 10
+        # prompt for workspace to move to and follow it
+        bindsym Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -517,30 +548,6 @@ mode "move" {
 
 bindsym $mod+r mode "resize"
 bindsym $mod+Ctrl+r mode "move"
-
-## Resize window (you can also use the mouse for that)
-#bindsym $mod+r mode "resize"
-#mode "resize" {
-#        # These bindings trigger as soon as you enter the resize mode
-#        # Pressing left will shrink the window’s width.
-#        # Pressing right will grow the window’s width.
-#        # Pressing up will shrink the window’s height.
-#        # Pressing down will grow the window’s height.
-#        bindsym j resize shrink width 5 px or 5 ppt
-#        bindsym k resize grow height 5 px or 5 ppt
-#        bindsym l resize shrink height 5 px or 5 ppt
-#        bindsym semicolon resize grow width 5 px or 5 ppt
-#
-#        # same bindings, but for the arrow keys
-#        bindsym Left resize shrink width 10 px or 10 ppt
-#        bindsym Down resize grow height 10 px or 10 ppt
-#        bindsym Up resize shrink height 10 px or 10 ppt
-#        bindsym Right resize grow width 10 px or 10 ppt
-#
-#        # exit resize mode: Enter or Escape
-#        bindsym Return mode "default"
-#        bindsym Escape mode "default"
-#}
 
 # Autostart applications
 # Nautilus options to start without opening a window or managing the desktop don't work
@@ -552,6 +559,8 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id copyq
 exec --no-startup-id blueman-applet
 exec --no-startup-id bluetoothctl
+exec --no-startup-id pulseaudio --start --log-target=syslog
+exec --no-startup-id gnome-keyring-daemon --start --foreground --components=secrets
 #exec --no-startup-id xautolock -time 10 -locker blurlock
 exec --no-startup-id xscreensaver -nosplash
 #exec --no-startup-id light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint
@@ -668,58 +677,58 @@ bar {
 #############################
 ### settings for i3-gaps: ###
 #############################
-#
-## Set inner/outer gaps
-## inner is between containers, outer is container to edge of screen
-## also available horizontal, vertical, left, right, top, bottom
-#gaps inner 5
-#gaps outer 2
-#
-## Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
-## gaps inner|outer current|all set|plus|minus <px>
-## gaps inner all set 10
-## gaps outer all plus 5
-#
-## Smart gaps (gaps used if only more than one container on the workspace)
-#smart_gaps on
-#
-## Smart borders (draw borders around container only if it is not the only container on this workspace) 
-## on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
-##smart_borders on
-#
-## Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
-#set $mode_gaps Gaps: (o) outer, (i) inner
-#set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-#set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-#bindsym $mod+Shift+g mode "$mode_gaps"
-#
-#mode "$mode_gaps" {
-#        bindsym o      mode "$mode_gaps_outer"
-#        bindsym i      mode "$mode_gaps_inner"
-#        bindsym Return mode "default"
-#        bindsym Escape mode "default"
-#}
-#mode "$mode_gaps_inner" {
-#        bindsym plus  gaps inner current plus 5
-#        bindsym minus gaps inner current minus 5
-#        bindsym 0     gaps inner current set 0
-#
-#        bindsym Shift+plus  gaps inner all plus 5
-#        bindsym Shift+minus gaps inner all minus 5
-#        bindsym Shift+0     gaps inner all set 0
-#
-#        bindsym Return mode "default"
-#        bindsym Escape mode "default"
-#}
-#mode "$mode_gaps_outer" {
-#        bindsym plus  gaps outer current plus 5
-#        bindsym minus gaps outer current minus 5
-#        bindsym 0     gaps outer current set 0
-#
-#        bindsym Shift+plus  gaps outer all plus 5
-#        bindsym Shift+minus gaps outer all minus 5
-#        bindsym Shift+0     gaps outer all set 0
-#
-#        bindsym Return mode "default"
-#        bindsym Escape mode "default"
-#}
+
+# Set inner/outer gaps
+# inner is between containers, outer is container to edge of screen
+# also available horizontal, vertical, left, right, top, bottom
+gaps inner 5
+gaps outer 2
+
+# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+# gaps inner|outer current|all set|plus|minus <px>
+# gaps inner all set 10
+# gaps outer all plus 5
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only container on this workspace) 
+# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+#smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
