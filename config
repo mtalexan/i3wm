@@ -40,7 +40,8 @@ hide_edge_borders smart_no_gaps
 bindsym $mod+Shift+t border toggle
 # prompt for input to change the title
 bindsym $mod+t exec i3-input -F 'title_format "%s"' -P 'New title: '
-
+# prompt for a mark to toggle on the current window
+bindsym $mod+m exec i3-input -F 'mark --add --toggle "%s"' -P 'Toggle Mark: '
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -60,7 +61,7 @@ floating_modifier $mod
 # start a terminal
 # urxvt doesn't work properly on Ubuntu, so force to uxterm instead
 bindsym $mod+Return exec uxterm
-bindsym $mod+F1 exec uxterm
+#bindsym $mod+F1 exec uxterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -97,8 +98,11 @@ bindsym XF86AudioMute exec $volume_mute_toggle
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send --urgency=normal --expire-time=1000 'brightness down'"
 
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+Shift+Ctrl+b exec $quickswitch --empty; exec terminal -e 'bmenu'
+bindsym $mod+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
+bindsym $mod+Shift+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
+# medium size, centered floating terminal
+bindsym $mod+F1 exec uxterm; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
+bindsym $mod+Shift+F1 exec $quickswitch --empty; exec uxterm; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
 bindsym $mod+F2 exec firefox
 bindsym $mod+Shift+F2 exec $quickswitch --empty; exec firefox
 bindsym $mod+F3 exec  google-chrome-stable
@@ -109,7 +113,10 @@ bindsym $mod+F4 exec thunar
 bindsym $mod+Shift+F4 exec $quickswitch --empty; exec thunar
 #bindsym $mod+F4 exec pcmanfm
 #bindsym $mod+Shift+F4 exec $quickswitch --empty; exec pcmanfm
-bindym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status'; floating enable border pixel 1 resize set width 750 px height 500 px move position center; move scratchpad
+# centered floating terminal window listing expressvpn status
+bindsym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status'; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
+bindsym $mod+Shift+F12 exec $quickswitch --empty; exec i3-sensible-terminal -hold -e 'expressvpn status'; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
+
 bindsym $altmod+Print --release exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
