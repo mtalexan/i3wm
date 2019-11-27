@@ -118,6 +118,7 @@ bindsym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status' floating
 bindsym $mod+Shift+F12 exec $quickswitch --empty; exec i3-sensible-terminal -hold -e 'expressvpn status' floating enable border pixel 1 resize set width 750 px height 500 px move position center
 
 bindsym $altmod+Print --release exec --no-startup-id flameshot gui
+bindsym $mod+Delete --release exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
@@ -255,6 +256,8 @@ bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 # picked from a prompt
 bindsym $mod+equal exec $quickswitch --workspaces --prompt
+# next empty workspace
+bindsym $mod+BackSpace exec $quickswitch --empty
 
 # Move focused container to workspace
 bindsym $mod+Ctrl+1 move container to workspace $ws1
@@ -272,6 +275,8 @@ bindsym $mod+Ctrl+0 move container to workspace $ws10
 bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"' -P \\"Move to workspace: \\""
 # quickswitch only works with workspaces that are already used, so it can't be used to send to an
 # empty workspace from the prompt
+# Move to the next empty workspace
+bindsym $mod+Ctrl+BackSpace exec $quickswitch --journey --empty
 
 # Move to workspace with focused container
 bindsym $mod+Ctrl+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -290,6 +295,9 @@ bindsym $mod+Ctrl+Shift+0 move container to workspace $ws10; workspace $ws10
 bindsym $mod+Ctrl+Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
 # quickswitch only works with workspaces that are already used, so it can't be used to send to an
 # empty workspace from the prompt
+# Move to the next empty workspace
+bindsym $mod+Ctrl+Shift+BackSpace exec $quickswitch --journey --follow --empty
+
 
 # Open applications on specific workspaces
 # assign [class="Thunderbird"] $ws1
@@ -463,6 +471,7 @@ mode "resize" {
         bindsym 0 move container to workspace 10; mode "default"
         # move to manually entered workspace and auto-exit
         bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
+        bindsym Ctrl+BackSpace exec $quickswitch --journey --empty; mode "default"
 
         # move focused container to workspace and follow it
 		bindsym Shift+1 move container to workspace 1; workspace 1
@@ -477,6 +486,7 @@ mode "resize" {
 		bindsym Shift+0 move container to workspace 10; workspace 10
         # prompt for workspace to move to and follow it
         bindsym Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
+        bindsym Shift+BackSpace exec $quickswitch --journey --empty --follow
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -553,7 +563,8 @@ mode "move" {
         bindsym 9 move container to workspace 9; mode "default"
         bindsym 0 move container to workspace 10; mode "default"
         # move to manually entered workspace and auto-exit
-        bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
+        bindsym Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
+        bindsym Ctrl+BackSpace exec $quickswitch --journey --empty; mode "default"
 
         # move focused container to workspace and follow it
 		bindsym Shift+1 move container to workspace 1; workspace 1
@@ -568,6 +579,7 @@ mode "move" {
 		bindsym Shift+0 move container to workspace 10; workspace 10
         # prompt for workspace to move to and follow it
         bindsym Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
+        bindsym Shift+BackSpace exec $quickswitch --journey --empty --follow
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
