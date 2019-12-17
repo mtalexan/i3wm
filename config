@@ -305,6 +305,9 @@ bindsym $mod+Ctrl+Shift+BackSpace exec $quickswitch --journey --follow --empty
 # assign [class="Thunar"] $ws3
 # assign [class="Skype"] $ws5
 
+# Get info about windows by running "xdotool selectwindow getwindowname", then clicking on the window.
+# This will print the name of the window that can be used in the filters below.
+
 # floating dialogs
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
@@ -347,6 +350,7 @@ for_window [title="(?i)^zoom"] floating enable border pixel 1
 for_window [title="^Network Connections$"] floating enable border pixel 1
 for_window [title="^Software & Updates$"] floating enable border pixel 1
 for_window [title="^Citrix Workspace$"] floating enable border pixel 1
+for_window [title="^Microsoft Teams Notification$"] floating enable border pixel 1
 
 
 # switch to workspace with urgent window automatically
@@ -599,7 +603,7 @@ exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 #exec --no-startup-id pamac-tray
-exec --no-startup-id copyq
+exec --no-startup-id copyq enable
 exec --no-startup-id blueman-applet
 exec --no-startup-id bluetoothctl
 exec --no-startup-id pulseaudio --start --log-target=syslog
