@@ -101,8 +101,9 @@ bindsym XF86AudioMute exec $volume_mute_toggle
 bindsym $mod+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
 bindsym $mod+Shift+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
 # medium size, centered floating terminal
-bindsym $mod+F1 exec uxterm floating enable border pixel 1 resize set width 750 px height 500 px move position center
-bindsym $mod+Shift+F1 exec $quickswitch --empty; exec uxterm floating enable border pixel 1 resize set width 750 px height 500 px move position center
+bindsym $mod+F1 exec --no-startup-id uxterm  && i3-msg "[id=$(xdotool getactivewindow)] floating enable"
+#enable border pixel 1 resize set width 750 px height 500 px move position center"
+bindsym $mod+Shift+F1 exec $quickswitch --empty; exec uxterm ; i3-msg "[id=$(xdotool getactivewindow)] floating enable border pixel 1 resize set width 750 px height 500 px move position center"
 bindsym $mod+F2 exec firefox
 bindsym $mod+Shift+F2 exec $quickswitch --empty; exec firefox
 bindsym $mod+F3 exec  google-chrome-stable
@@ -111,11 +112,13 @@ bindsym $mod+Shift+F3 exec $quickswitch --empty; exec google-chrome-stable
 #bindsym $mod+Shift+F3 exec $quickswitch --empty; exec chromium-browser
 bindsym $mod+F4 exec thunar
 bindsym $mod+Shift+F4 exec $quickswitch --empty; exec thunar
+bindsym $mod+F5 exec mousepad
+bindsym $mod+Shift+F5 exec $quickswitch --empty; exec mousepad
 #bindsym $mod+F4 exec pcmanfm
 #bindsym $mod+Shift+F4 exec $quickswitch --empty; exec pcmanfm
 # centered floating terminal window listing expressvpn status
-bindsym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status' floating enable border pixel 1 resize set width 750 px height 500 px move position center
-bindsym $mod+Shift+F12 exec $quickswitch --empty; exec i3-sensible-terminal -hold -e 'expressvpn status' floating enable border pixel 1 resize set width 750 px height 500 px move position center
+bindsym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status' && i3-msg "[id=$(xdotool getactivewindow)] floating enable border pixel 1 resize set width 750 px height 500 px move position center"
+bindsym $mod+Shift+F12 exec $quickswitch --empty; exec i3-sensible-terminal -hold -e 'expressvpn status' && i3-msg "[id=$(xdotool getactivewindow)] floating enable border pixel 1 resize set width 750 px height 500 px move position center"
 
 bindsym $altmod+Print --release exec --no-startup-id flameshot gui
 bindsym $mod+Delete --release exec --no-startup-id flameshot gui
@@ -344,14 +347,18 @@ for_window [class="Firefox"] border pixel 1
 for_window [class="Chrome"] border pixel 1
 for_window [instance="(?i)^copyq$" class="(?i)^Copyq$"] floating enable border pixel 1
 for_window [class="Telegram"] floating enable border pixel 1
-for_window [class="Calculator"] floating enable border pixel 1
+#for_window [class="Calculator"] floating enable border pixel 1
 for_window [class="usbguard-applet-qt"] floating enable border pixel 1 resize set width 1100 px height 650 px move position center
 for_window [title="(?i)^zoom"] floating enable border pixel 1
 for_window [title="^Network Connections$"] floating enable border pixel 1
 for_window [title="^Software & Updates$"] floating enable border pixel 1
 for_window [title="^Citrix Workspace$"] floating enable border pixel 1
 for_window [title="^Microsoft Teams Notification$"] floating enable border pixel 1
+#for_window [title="^Microsoft Teams Notification$"] floating enable border pixel 1 move position left bottom
+# disable it from stealing focus too
+no_focus [title="^Microsoft Teams Notification$"]
 
+for_window [title="Calculator"] floating enable border pixel 1 move position 0 0
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -681,7 +688,7 @@ bar {
 
 #                      border  backgr. text
         focused_workspace  #F9FAF9 #16a085 #292F34
-        active_workspace   #595B5B #353836 #FDF6E3
+        active_workspace   #595B5B #427A55 #FDF6E3
         inactive_workspace #595B5B #222D31 #EEE8D5
         binding_mode       #16a085 #2C2C2C #F9FAF9
         urgent_workspace   #16a085 #FDF6E3 #E5201D
